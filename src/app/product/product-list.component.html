@@ -1,0 +1,43 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    {{pageTitle}}
+  </div>
+  <div class="panel-body">
+    <a class="btn btn-success" [routerLink]="['/products/new']" style="float:right">Add <span class="glyphicon glyphicon-plus-sign"></span></a> <div class="input-group">
+      <input type="text" class="form-control"  placeholder="Search Products.." [(ngModel)]="filter" > 
+     
+      
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover" *ngIf="products && products.length">
+        <thead>
+          <tr>
+            <th width="25%" (click)="sort('productname')">Product
+              <span class="glyphicon sort-icon" *ngIf="key =='productname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th width="40%">Description</th>
+            <th (click)="sort('name')">Category
+                <span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+           
+            <th width="5%">Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products |orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p } ; let i = index">
+            <td><a [routerLink]="['/products', product.id]">{{product.name}}</a></td>
+            <td>{{product.description}}</td>
+            <td>{{product.category.name}}</td>
+           
+            <td>{{product.quantity}}</td>
+            <td>
+              <button class="btn btn-danger" (click)="removeProduct(product)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </table>
+    </div>
+  </div>
+</div>

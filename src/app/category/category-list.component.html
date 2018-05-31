@@ -1,0 +1,39 @@
+<div class="col-md-4">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            {{pageTitle}}
+        </div>
+        <div class="panel-body">
+            <a class="btn btn-default btn-sm" [routerLink]="['/categories/new']" style="float:right"><span class="glyphicon glyphicon-plus"></span> Plus</a>
+            <div class="table-responsive">
+                <table class="table table-striped" *ngIf="categories && categories.length">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let category of categories" >
+                            <td>{{category.name}}</td>
+                            <div style="float:right"><button type="button" class="btn btn-default btn-sm" title="detail" (click) = selectCategory(category) >
+                                <span class="glyphicon glyphicon-hand-left"></span>
+                              </button>
+                              <button type="button" class="btn btn-default btn-sm" title="edit" [routerLink]="['/categories', category.id]">
+                                <span class="glyphicon glyphicon-edit"></span> 
+                              </button>
+                              <button type="button" class="btn btn-default btn-sm" title="delete" (click)="delete(category)">
+                                <span class="glyphicon glyphicon-trash"></span> 
+                              </button></div>
+                        
+                        </tr>
+    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <category-detail [category]="selectedCategory"></category-detail>
+</div>

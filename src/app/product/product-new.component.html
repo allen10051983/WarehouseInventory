@@ -1,0 +1,65 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">Add a new Product</div>
+  <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+  <div class="panel-body">
+    <form #form="ngForm">
+      <div class="form-group">
+        <label class="control-label">Name</label>
+        <div>
+          <input type="input" class="form-control" name="name" required minlength="4" #name="ngModel" placeholder="Product Name" [(ngModel)]="product.name"
+          />
+        </div>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+          <div *ngIf="name.errors.required">
+            Name is required.
+          </div>
+          <div *ngIf="name.errors.minlength">
+            Name must be at least 4 characters long.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Description</label>
+        <div>
+          <textarea class="form-control" name="description" required #description="ngModel" placeholder="Product Description" [(ngModel)]="product.description"></textarea>
+        </div>
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+          <div *ngIf="description.errors.required">
+            Description is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Category</label>
+        <div>
+          <select name="category" required #category="ngModel" [(ngModel)]="product.category">
+            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+          </select>
+        </div>
+        <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert alert-danger">
+          <div *ngIf="category.errors.required">
+            Category is required.
+          </div>
+        </div>
+      </div>
+     
+     
+      <div class="form-group">
+        <label class="control-label">Quantity</label>
+        <div>
+          <input type="number" class="form-control" required pattern="^([1-9][0-9]{0,1}|1000)$" #quantity="ngModel" name="quantity" placeholder="0" [(ngModel)]="product.quantity" />
+        </div>
+        <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="alert alert-danger">
+          <div *ngIf="quantity.errors.required">
+              A numberr is required.
+          </div>
+          <div *ngIf="quantity.errors.pattern">
+              Please enter a number between 1 - 1000.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="addProduct(product)">Create</button>
+      <button type="submit" class="btn btn-default" (click)="goBack()">Cancel</button>
+    </form>
+  </div>
+</div>
